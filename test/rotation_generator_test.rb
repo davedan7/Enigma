@@ -2,7 +2,7 @@
 # require 'minitest/autorun'
 # require 'minitest/pride'
 require './lib/rotation_generator'
-require_relative 'test_helper'
+require './test/test_helper'
 
 class RotationGeneratorTest < Minitest::Test
 
@@ -11,26 +11,38 @@ class RotationGeneratorTest < Minitest::Test
 	end
 
 	def test_rotation_a_is_the_first_two_digits_of_encryption_key
-		assert_equal @keygen.rotation_a("12345"), 12
-		assert_equal @keygen.rotation_a("22334"), 22
-		assert_equal @keygen.rotation_a("59234"), 59
+		key = RotationGenerator.new("12345")
+		assert_equal key.rotation_a, 12
+		key = RotationGenerator.new("22334")
+		assert_equal key.rotation_a, 22
+		key = RotationGenerator.new("59234")
+		assert_equal key.rotation_a, 59
 	end
 
 	def test_rotation_b_is_the_second_and_third_digits_of_encryption_key
-		assert_equal @keygen.rotation_b("12345"), 23
-		assert_equal @keygen.rotation_b("22334"), 23
-		assert_equal @keygen.rotation_b("59234"), 92
+		key = RotationGenerator.new("12345")
+		assert_equal key.rotation_b, 23
+		key = RotationGenerator.new("22334")
+		assert_equal key.rotation_b, 23
+		key = RotationGenerator.new("59234")
+		assert_equal key.rotation_b, 92
 	end
 
 	def test_rotation_c_is_the_third_and_fourth_digits_of_encryption_key
-		assert_equal @keygen.rotation_c("12345"), 34
-		assert_equal @keygen.rotation_c("22334"), 33
-		assert_equal @keygen.rotation_c("59234"), 23
+		key = RotationGenerator.new("12345")
+		assert_equal key.rotation_c, 34
+		key = RotationGenerator.new("22334")
+		assert_equal key.rotation_c, 33
+		key = RotationGenerator.new("59234")
+		assert_equal key.rotation_c, 23
 	end
 
 	def test_rotation_d_is_the_fourth_and_fifth_digits_of_encryption_key
-		assert_equal @keygen.rotation_d("12345"), 45
-		assert_equal @keygen.rotation_d("22334"), 34
-		assert_equal @keygen.rotation_d("59234"), 34
+		key = RotationGenerator.new("12345")
+		assert_equal key.rotation_d, 45
+		key = RotationGenerator.new("22334")
+		assert_equal key.rotation_d, 34
+		key = RotationGenerator.new("59234")
+		assert_equal key.rotation_d, 34
 	end
 end

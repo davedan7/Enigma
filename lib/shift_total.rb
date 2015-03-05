@@ -2,23 +2,17 @@ require_relative './encryption_key'
 require_relative './offset_generator'
 require_relative './rotation_generator'
 
-class Rotator
+class ShiftTotal
 
-	# def initialize(encryption_key = EncryptionKey.new, offset = OffsetGenerator.new)
-	# 	# @encryption_key = EncryptionKey.new
-	# 	# @offset = OffsetGenerator.new
+	# def initialize
+	# 	@encryption_key = EncryptionKey.new
+	# 	@offset = OffsetGenerator.new
 	# 	@rotation = RotationGenerator.new
 	# end
 
-	def initialize
-		@encryption_key = EncryptionKey.new
-		@offset = OffsetGenerator.new
-		@rotation = RotationGenerator.new
-	end
-
-	def character_map
-		[*('a'..'z'), *('0'..'9'), " ", ".", ","].join
-	end
+	# def character_map
+	# 	[*('a'..'z'), *('0'..'9'), " ", ".", ","].join
+	# end
 
 	def a_shift_total(offset = @offset.date, rotation = @encryption_key.encryption_key)
 		@offset.offset_a(offset) + @rotation.rotation_a(rotation)
@@ -42,5 +36,5 @@ class Rotator
 
 end
 
-rot = Rotator.new
-puts rot.a_shift_total
+# rot = Rotator.new
+# puts rot.a_shift_total

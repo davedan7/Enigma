@@ -1,37 +1,38 @@
-require_relative './rotator'
+
 
 class Encryptor
 
-  attr_reader :input_split
-
-  def initialize
-    @rotator = Rotator.new
-    @input_split = []
+  def initialize(shift, character_map = "abcdefghijklmnopqrstuvwxyz0123456789 .,")
+    i = shift % character_map.size
+    @encrypt_map = character_map[i..-1] + character_map[0..i]
+    @decrypt_map = character_map
   end
+
+  def encrypt(string)
+    string.tr(@decrypt_map, @encrypt_map)
+  end
+
+  def decrypt(string)
+    string.tr(@encrypt_map, @decrypt_map)
+  end
+
+end
+
+
+
+
 
   def split(input)
     input.chars.each_slice(4) {|block| @input_split << block}
   end
 
-  def encrypt_a
-    a_new = @input_split.map do |block|
-      block[0 + @rotator.a_shift_total]
-    end
+  def index_match
+
   end
 
-end
 
-test = Encryptor.new
-a = test.encrypt_a
-print a
 
-# arr = [1, 2, 3 ,4]
-# (a, b, c, d) = arr
-# puts a
-# puts b
-# puts c
-# puts d
-#
-# test = Encryptor.new
-# test.split("This is a test")
-# print test.input_split
+
+# def character_map
+#   [*('a'..'z'), *('0'..'9'), " ", ".", ","].join
+# end

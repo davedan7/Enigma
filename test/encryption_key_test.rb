@@ -2,7 +2,7 @@
 # require 'minitest/autorun'
 # require 'minitest/pride'
 require './lib/encryption_key.rb'
-require_relative 'test_helper'
+require './test/test_helper'
 
 class KeyGeneratorTest < Minitest::Test
 

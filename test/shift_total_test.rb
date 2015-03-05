@@ -1,18 +1,18 @@
 # require 'minitest'
 # require 'minitest/autorun'
 # require 'minitest/pride'
-require_relative '../lib/rotator'
+require_relative '../lib/shift_total'
 require_relative 'test_helper'
 
-class RotatorTest < Minitest::Test
+class ShiftTotalTest < Minitest::Test
 
 	def setup
-		@rot = Rotator.new
+		@rot = ShiftTotal.new
 	end
 
-	def test_it_prints_out_the_character_map
-		assert_equal @rot.character_map, "abcdefghijklmnopqrstuvwxyz0123456789 .,"
-	end
+	# def test_it_prints_out_the_character_map
+	# 	assert_equal @rot.character_map, "abcdefghijklmnopqrstuvwxyz0123456789 .,"
+	# end
 
 	def test_it_adds_offset_a_to_rotation_a
 		assert_equal @rot.a_shift_total("030315", "12345"), 21  # I pulled these test numbers from the offset_generator_test and rotation_generator_test files

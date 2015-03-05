@@ -4,6 +4,12 @@ require_relative './rotation_generator'
 
 class Rotator
 
+	# def initialize(encryption_key = EncryptionKey.new, offset = OffsetGenerator.new)
+	# 	# @encryption_key = EncryptionKey.new
+	# 	# @offset = OffsetGenerator.new
+	# 	@rotation = RotationGenerator.new
+	# end
+
 	def initialize
 		@encryption_key = EncryptionKey.new
 		@offset = OffsetGenerator.new

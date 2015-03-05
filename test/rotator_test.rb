@@ -1,7 +1,8 @@
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
+# require 'minitest'
+# require 'minitest/autorun'
+# require 'minitest/pride'
 require_relative '../lib/rotator'
+require_relative 'test_helper'
 
 class RotatorTest < Minitest::Test
 

@@ -1,22 +1,14 @@
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
+# require 'minitest'
+# require 'minitest/autorun'
+# require 'minitest/pride'
 require './lib/rotation_generator'
+require_relative 'test_helper'
 
 class RotationGeneratorTest < Minitest::Test
 
 	def setup
 		@keygen = RotationGenerator.new
 	end
-
-	# def test_it_creates_5_random_numbers # there's a very small change this will return true
-	# 	key1 = EncryptionKey.new
-	# 	key2 = EncryptionKey.new
-	# 	refute_equal key1.encryption_key, key2.encryption_key
-	# 	key3 = EncryptionKey.new
-	# 	refute_equal key1.encryption_key, key3.encryption_key
-	# 	refute_equal key2.encryption_key, key3.encryption_key
-	# end
 
 	def test_rotation_a_is_the_first_two_digits_of_encryption_key
 		assert_equal @keygen.rotation_a("12345"), 12

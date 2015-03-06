@@ -4,39 +4,39 @@ class RotationGenerator
 	attr_reader :key
 
 	def initialize(key = nil)
-		@key = key           # => nil
-	end             # => :initialize
+		@key = key
+	end
 
 	def generate_key
-    nums = []                   # => []
-    5.times {nums << rand(10)}  # => 5
-    @key = nums.join            # => "51414"
-  end                           # => :generate_key
+    nums = []
+    5.times {nums << rand(10)}
+    @key = nums.join
+  end
 
-	def rotation_a(key = @key)
+	def a(key = @key)
 		@key[0..1].to_i
-	end                                   # => :rotation_a
+	end
 
-	def rotation_b(key = @key)
-		@key[1..2].to_i                      # => 14
-	end                                   # => :rotation_b
+	def b(key = @key)
+		@key[1..2].to_i
+	end
 
-	def rotation_c(key = @key)
-		@key[2..3].to_i                      # => 41
-	end                                   # => :rotation_c
+	def c(key = @key)
+		@key[2..3].to_i
+	end
 
-	def rotation_d(key = @key)
+	def d(key = @key)
 		@key[3..4].to_i
-	end                                   # => :rotation_d
+	end
 
-end  # => :rotation_d
+end
 
-test = RotationGenerator.new
-test.generate_key # => "51414"
-puts test.key      # => nil
-puts test.key      # => nil
-puts test.rotation_b          # => nil
-puts test.rotation_c          # => nil
+# test = RotationGenerator.new
+# test.generate_key
+# puts test.key
+# puts test.key
+# puts test.b
+# puts test.c
 
 
 # class EncryptionKey
@@ -52,8 +52,3 @@ puts test.rotation_c          # => nil
 # test = KeyGenerator.new
 # 10.times {puts test.encryption_key}
 # 5.times {puts test.rotation_a}
-
-# >> 51414
-# >> 51414
-# >> 14
-# >> 41

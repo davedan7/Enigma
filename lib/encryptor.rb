@@ -19,8 +19,7 @@ class Encryptor
 end
 
 
-
-# 
+#
 #
 #   def split(input)
 #     input.chars.each_slice(4) {|block| @input_split << block}

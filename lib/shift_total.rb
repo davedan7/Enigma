@@ -14,7 +14,7 @@ class ShiftTotal
 	# def character_map
 	# 	[*('a'..'z'), *('0'..'9'), " ", ".", ","].join
 	# end
-	
+
 	def a_shift_total(offset = @offset.date, rotation = @encryption_key.encryption_key)
 		@offset.offset_a(offset) + @rotation.rotation_a(rotation)
 		# @offset.offset_a("030315") + @rotation.rotation_a("123456")
@@ -37,6 +37,21 @@ class ShiftTotal
 
 end
 
+# def a_shift_total   #(offset = @offset.date, rotation = @rotation)
+#   @offset.a + @rotation.rotation_a # ~> NoMethodError: undefined method `a' for nil:NilClass
+# end
+#
+# def b_shift_total   #(offset = @offset.date, rotation = @rotation)
+#   @offset.b + @rotation.rotation_b
+# end
+#
+# def c_shift_total   #(offset = @offset.date, rotation = @rotation)
+#   @offset.c + @rotation.rotation_c
+# end
+#
+# def d_shift_total   #(offset = @offset.date, rotation = @rotation)
+#   @offset.d + @rotation.rotation_d
+# end
 # rot = Rotator.new
 # puts rot.a_shift_total
 

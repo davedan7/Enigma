@@ -20,19 +20,19 @@ end
 
 
 
-
-
-  def split(input)
-    input.chars.each_slice(4) {|block| @input_split << block}
-  end
-
-  def index_match
-
-  end
-
-
-
-
-# def character_map
+# 
+#
+#   def split(input)
+#     input.chars.each_slice(4) {|block| @input_split << block}
+#   end
+#
+#   def index_match
+#
+#   end
+#
+#
+#
+#
+# # def character_map
 #   [*('a'..'z'), *('0'..'9'), " ", ".", ","].join
 # end

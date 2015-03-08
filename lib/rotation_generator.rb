@@ -30,15 +30,16 @@ class RotationGenerator
 		key[3..4].to_i
 	end
 
-	def splits
+	def splits					# array of the different splits. Can match thsi with the offsets to get the total shit number
 		[a, b, c, d]
 	end
+
 end
 
-key = EncryptionKey.new("12345")
-test = RotationGenerator.new(key.key)
-print test.key
-print test.splits
-# print test.a
+# key = EncryptionKey.new("12345")
+# test = RotationGenerator.new(key.key)
+# print test.key
+# print test.splits
+# # print test.a
 # print test.b
 # print test.c

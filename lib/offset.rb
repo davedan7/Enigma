@@ -41,5 +41,5 @@ class Offset
 
 end
 
-test = Offset.new("080315")
-print test.splits
+# test = Offset.new("080315")
+# print test.splits

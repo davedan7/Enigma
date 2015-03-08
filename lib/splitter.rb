@@ -30,5 +30,12 @@ class Splitter  # Individual methods return as a string, input_split returns an 
     arr.join
   end
 
+  def arr
+    [a,b,c,d]
+  end
+
 end
 
+test = Splitter.new("abcd")
+test.split
+print test.arr

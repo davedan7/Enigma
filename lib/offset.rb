@@ -1,9 +1,5 @@
 class Offset
 
-	# def initialize
-	# 	@key
-	# end
-
 	def a(target_date = date) #on line 7 through 23, I created an argument that ddefaults to calling the date method so that I could stub the date for testing purposes
 		key(target_date)[0].to_i
 	end
@@ -36,3 +32,4 @@ class Offset
 	end
 
 end
+

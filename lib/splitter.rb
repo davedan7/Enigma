@@ -31,3 +31,4 @@ class Splitter  # Individual methods return as a string, input_split returns an 
   end
 
 end
+

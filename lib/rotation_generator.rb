@@ -1,17 +1,16 @@
-
-
 class RotationGenerator
-	attr_reader :key
+
+	attr_accessor :key
 
 	def initialize(key = nil)
 		@key = key
 	end
 
-	def generate_key
-    nums = []
-    5.times {nums << rand(10)}
-    @key = nums.join
-  end
+  # def generate_key
+  #   nums = []
+  #   5.times {nums << rand(10)}
+  #   @key = nums.join
+  # end
 
 	def a(key = @key)
 		@key[0..1].to_i
@@ -30,25 +29,3 @@ class RotationGenerator
 	end
 
 end
-
-# test = RotationGenerator.new
-# test.generate_key
-# puts test.key
-# puts test.key
-# puts test.b
-# puts test.c
-
-
-# class EncryptionKey
-# 	attr_reader :encryption_key
-#
-#   def encryption_key
-#     nums = []
-#     5.times {nums << rand(10)}
-#     nums.join
-#   end
-#
-# end
-# test = KeyGenerator.new
-# 10.times {puts test.encryption_key}
-# 5.times {puts test.rotation_a}

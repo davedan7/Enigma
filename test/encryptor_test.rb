@@ -56,4 +56,26 @@ class EncryptorTest < Minitest::Test
     assert_equal enc.encrypt("a"), "b"
   end
 
+  def test_it_can_decrypt_a_set_string
+    enc = Encryptor.new(1)
+    assert_equal "bcde", enc.decrypt("cdef")
+  end
+
+  def test_it_can_decrypt_a_string_saved_as_a_variable
+    enc = Encryptor.new(1)
+    crypt = enc.encrypt("bcde")
+    assert_equal "bcde", enc.decrypt(crypt)
+  end
+
+  def test_it_can_decrypt_two_strings
+    enc = Encryptor.new(1)
+    assert_equal "bcde fghi", enc.decrypt("cdef.ghij")
+  end
+
+  def test_it_can_decrypt_two_strings_set_as_variable
+    enc = Encryptor.new(1)
+    crypt = enc.encrypt("bcde fghi")
+    assert_equal "bcde fghi", enc.decrypt(crypt)
+  end
+
 end

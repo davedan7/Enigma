@@ -1,5 +1,9 @@
 class EncryptionKey
-	attr_reader :encryption_key
+	attr_reader :key
+
+  def initialize(key = encryption_key)
+    @key = key
+  end
 
   def encryption_key
     nums = []

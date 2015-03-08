@@ -6,6 +6,11 @@ require './test/test_helper'
 
 class KeyGeneratorTest < Minitest::Test
 
+  def test_it_generates_a_5_digit_key
+    key = EncryptionKey.new
+    assert key.key.length == 5
+  end
+
   def test_it_creates_5_random_numbers # there's a very small change this will return true
 		key1 = EncryptionKey.new
 		key2 = EncryptionKey.new

@@ -24,6 +24,10 @@ class Offset
 		digit_to_key_convert(target_date)
 	end
 
+	def splits
+		[a, b, c, d]
+	end
+
 	def date
 		time = Time.now
 		time.strftime("%d%m%y")
@@ -37,6 +41,5 @@ class Offset
 
 end
 
-test = Offset.new("123456")
-print test.a
-print test.b
+test = Offset.new("080315")
+print test.splits

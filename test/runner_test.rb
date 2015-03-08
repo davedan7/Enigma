@@ -9,7 +9,8 @@ class RunnerTest < Minitest::Test
 
   def test_it_can_encrypt_a_letter
     a = Runner.new
-    a.encrypt
+		a.key = EncryptionKey.new("12345")
+    assert_equal a.encrypt("a", "080315"), "v"
   end
 
 

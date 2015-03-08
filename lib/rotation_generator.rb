@@ -30,11 +30,15 @@ class RotationGenerator
 		key[3..4].to_i
 	end
 
+	def splits
+		[a, b, c, d]
+	end
 end
 
-# key = EncryptionKey.new("12345")
-# test = RotationGenerator.new(key.key)
-# # print test.key
+key = EncryptionKey.new("12345")
+test = RotationGenerator.new(key.key)
+print test.key
+print test.splits
 # print test.a
 # print test.b
 # print test.c

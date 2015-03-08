@@ -1,22 +1,26 @@
 class Offset
 
-	def a(target_date = date) #on line 7 through 23, I created an argument that ddefaults to calling the date method so that I could stub the date for testing purposes
-		key(target_date)[0].to_i
+	def initialize(target_date = date)
+		@target_date = target_date
 	end
 
-	def b(target_date = date)
-		key(target_date)[1].to_i
+	def a #(target_date = date) #on line 7 through 23, I created an argument that ddefaults to calling the date method so that I could stub the date for testing purposes
+		key(@target_date)[0].to_i
 	end
 
-	def c(target_date = date)
-		key(target_date)[2].to_i
+	def b  #(target_date = date)
+		key(@target_date)[1].to_i
 	end
 
-	def d(target_date = date)
-		key(target_date)[3].to_i
+	def c  #(target_date = date)
+		key(@target_date)[2].to_i
 	end
 
-	def key(target_date= date) # Takes the date from date method, passes it to digit_to_key_convert which produces the offset key
+	def d  #(target_date = date)
+		key(@target_date)[3].to_i
+	end
+
+	def key(target_date= @target_date) # Takes the date from date method, passes it to digit_to_key_convert which produces the offset key
 		digit_to_key_convert(target_date)
 	end
 
@@ -33,3 +37,6 @@ class Offset
 
 end
 
+test = Offset.new("123456")
+print test.a
+print test.b

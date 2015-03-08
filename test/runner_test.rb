@@ -8,8 +8,11 @@ class RunnerTest < Minitest::Test
 	end
 
   def test_it_can_encrypt_a_letter
-
+    a = Runner.new
+    a.encrypt
   end
+
+
 
 
 end

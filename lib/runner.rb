@@ -6,31 +6,36 @@ require_relative 'encryption_key'
 
 class Runner
 
+  attr_accessor :key, :offset
+
   def initialize
-    @rotation = RotationGenerator.new
+    # @rotation = RotationGenerator.new
     @offset = Offset.new
+    @key = EncryptionKey.new
+
   end
 
 
  def encrypt(string)
 
-    @rotation.generate_key      #Don't generate the key more than once, or everything will explode like a Michael Bay movie
+    # @rotation.generate_key      #Don't generate the key more than once, or everything will explode like a Michael Bay movie
+    rotation = RotationGenerator.new(@key.key)
 
-    puts "Your key is: #{@rotation.key}"
+    puts "Your key is: #{rotation.key}, and the date is #{@offset.date}"
 
     splitter    = Splitter.new(string)
     splitter.split
 
-    a_encryptor = Encryptor.new(@offset.a + @rotation.a)
+    a_encryptor = Encryptor.new(@offset.a + rotation.a)
     a_new = a_encryptor.encrypt(splitter.a)
 
-    b_encryptor = Encryptor.new(@offset.b + @rotation.b)
+    b_encryptor = Encryptor.new(@offset.b + rotation.b)
     b_new = b_encryptor.encrypt(splitter.b)
 
-    c_encryptor = Encryptor.new(@offset.c + @rotation.c)
+    c_encryptor = Encryptor.new(@offset.c + rotation.c)
     c_new = c_encryptor.encrypt(splitter.c)
 
-    d_encryptor = Encryptor.new(@offset.d + @rotation.d)
+    d_encryptor = Encryptor.new(@offset.d + rotation.d)
     d_new = d_encryptor.encrypt(splitter.d)
 
     encrypted_arr = [a_new, b_new, c_new, d_new]
@@ -85,6 +90,10 @@ class Runner
 end
 
 test = Runner.new
-test.encrypt("this is a test. asdf,.\n")
-test.decrypt("hd,0yejf16kmgp2f1o7n07", "57281", "080315")
+test.key = EncryptionKey.new("12345")
+test.offset.date = "080214"
+print test.encrypt("a")
+# test.encrypt("this is a test. asdf,.\n")
+# test.decrypt("bzb s0lpvpmwa.4pv 9xuq", "51691", "080315")
+# test.decrypt("hd,0yejf16kmgp2f1o7n07", "57281", "080315")
 # test.decrypt("4qesb7hv77z49pos9bek9aeldq0oacss0p", "13444", "020315")

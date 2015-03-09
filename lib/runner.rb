@@ -21,21 +21,20 @@ class Runner
   def split
     split = Splitter.new(@string)
     split.split
+    split
   end
 
-  def encrypt(string = @string, date = @offset.date)
-
+  def rotation
     rotation = RotationGenerator.new(@key.key)
-    offset = Offset.new(date)
+  end
 
-    puts "Your key is: #{rotation.key}, and the date is #{date}"
-    #
-    # splitter = Splitter.new(string)
-    # splitter.split
-
-    shift_total = rotation.splits.zip(offset.splits)
+  def shift_new
+    shift_total = rotation.splits.zip(@offset.splits)
     shift_new = shift_total.map { |arr| arr.reduce{ |sum, n| sum + n}}
+    shift_new
+  end
 
+  def encrypted_arr
     encrypted_arr = []
     index = 0
     shift_new.map do |shift|
@@ -43,6 +42,29 @@ class Runner
       encrypted_arr << i.encrypt(split.arr[index])
       index += 1
     end
+    encrypted_arr
+  end
+
+  def encrypt(date = @offset.date)
+
+    # rotation = RotationGenerator.new(@key.key)
+    # offset = Offset.new(date)
+
+    puts "Your key is: #{rotation.key}, and the date is #{date}"
+    #
+    # splitter = Splitter.new(string)
+    # splitter.split
+
+    # shift_total = rotation.splits.zip(@offset.splits)
+    # shift_new = shift_total.map { |arr| arr.reduce{ |sum, n| sum + n}}
+
+    # encrypted_arr = []
+    # index = 0
+    # shift_new.map do |shift|
+    #   i = Encryptor.new(shift)
+    #   encrypted_arr << i.encrypt(split.arr[index])
+    #   index += 1
+    # end
 
     new_str = []
 
@@ -52,7 +74,7 @@ class Runner
       i += 1
     end
 
-    puts new_str.join
+    new_str.join
 
   end
 
@@ -127,18 +149,19 @@ end
 # filename = ARGV.first
 #
 # txt = File.open(filename, 'r')
-# line = txt.readline
+# # line = txt.readline
+#
+# fuck = Runner.new(line)
+#
+# fuck.key = EncryptionKey.new("12345")
+# puts fuck.encrypt
 
-fuck = Runner.new("this is a test")
-fuck.key = EncryptionKey.new("12345")
-puts fuck.encrypt
 
 
-
-# test = Runner.new
-# test.key = EncryptionKey.new("12345")
-# #
-# print test.encrypt("abcdefgh", "080315\n")
+test = Runner.new("this is a test")
+test.key = EncryptionKey.new("12345")
+#
+print test.encrypt("080315")
 # # print test.encrypt("a", "080315\n")
 # # print test.encrypt("a\n")
 # # print test.encrypt("this is a test. asdf,.\n")

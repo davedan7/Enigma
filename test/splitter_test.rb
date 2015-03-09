@@ -13,25 +13,25 @@ class RunnerTest < Minitest::Test
   def test_it_splits_the_first_index_into_group_a
     string = Splitter.new("abcdabcdabcdabcd")
     string.split
-    assert_equal "aaaa", string.a
+    assert_equal "aaaa", string.arr[0]
   end
 
   def test_it_splits_the_first_index_into_group_b
     string = Splitter.new("abcdabcdabcdabcd")
     string.split
-    assert_equal "bbbb", string.b
+    assert_equal "bbbb", string.arr[1]
   end
 
   def test_it_splits_the_first_index_into_group_c
     string = Splitter.new("abcdabcdabcdabcd")
     string.split
-    assert_equal "cccc", string.c
+    assert_equal "cccc", string.arr[2]
   end
 
   def test_it_splits_the_first_index_into_group_d
     string = Splitter.new("abcdabcdabcdabcd")
     string.split
-    assert_equal "dddd", string.d
+    assert_equal "dddd", string.arr[3]
   end
 
 end

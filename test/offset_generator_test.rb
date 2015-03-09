@@ -2,17 +2,17 @@
 # require 'minitest/autorun'
 # require 'minitest/pride'
 require_relative 'test_helper'
-require_relative '../lib/offset'
+require_relative '../lib/offset_generator'
 
 
-class OffsetTest < Minitest::Test
+class OffsetGeneratorTest < Minitest::Test
 
 	# def setup
-	# 	@off = Offset.new
+	# 	@off = OffsetGenerator.new
 	# end
 
 	def test_it_knows_the_current_date
-		off = Offset.new
+		off = OffsetGenerator.new
 		time = Time.new
 		time_key = time.strftime("%d%m%y")
 		assert_equal off.date, time_key
@@ -20,12 +20,12 @@ class OffsetTest < Minitest::Test
 	end
 
 	def test_it_has_a_digit_to_key_converter
-		off = Offset.new
+		off = OffsetGenerator.new
 		assert off.respond_to?(:digit_to_key_convert)
 	end
 
 	def test_it_can_take_a_6_digit_number_and_produce_the_offset_number
-		off = Offset.new
+		off = OffsetGenerator.new
 		assert_equal off.digit_to_key_convert("123456"), "3936"
 		assert_equal off.digit_to_key_convert("111111"), "4321"
 		assert_equal off.digit_to_key_convert("531234"), "2756"
@@ -33,83 +33,83 @@ class OffsetTest < Minitest::Test
 	end
 
 	def test_it_has_a_date_to_key_converter
-		off = Offset.new
+		off = OffsetGenerator.new
 		assert off.respond_to?(:key)
 	end
 
 	def test_it_takes_the_current_date_and_produces_an_offset_key
-		off = Offset.new("030315")
+		off = OffsetGenerator.new("030315")
 		assert_equal off.key, "9225"			#Numbers from current date - 3/3/15
-		date_key_stubbed = Offset.new
+		date_key_stubbed = OffsetGenerator.new
 		assert_equal date_key_stubbed.key("531234"), "2756"
 	end
 
 	def test_index_1_is_the_first_digit_of_the_date_key
-		another_key = Offset.new("030315")
+		another_key = OffsetGenerator.new("030315")
 		assert_equal another_key.splits[0], 9
-		another_key = Offset.new("123456")
+		another_key = OffsetGenerator.new("123456")
 		assert_equal another_key.splits[0], 3
 	end
 
 	def test_index_2_is_the_second_digit_of_the_date_key
-		off = Offset.new("030315")
+		off = OffsetGenerator.new("030315")
 		assert_equal off.splits[1], 2
-		another_key = Offset.new("123456")
+		another_key = OffsetGenerator.new("123456")
 		assert_equal another_key.splits[1], 9
-		another_key = Offset.new("531234")
+		another_key = OffsetGenerator.new("531234")
 		assert_equal another_key.splits[1], 7
 	end
 
 	def test_index_3_is_the_third_digit_of_the_date_key
-		off = Offset.new("030315")
+		off = OffsetGenerator.new("030315")
 		assert_equal off.splits[2], 2
-		another_key = Offset.new("123456")
+		another_key = OffsetGenerator.new("123456")
 		assert_equal another_key.splits[2], 3
-		another_key = Offset.new("531234")
+		another_key = OffsetGenerator.new("531234")
 		assert_equal another_key.splits[2], 5
 	end
 
 	def test_index_4_is_the_fourth_digit_of_the_date_key
-		off = Offset.new("030315")
+		off = OffsetGenerator.new("030315")
 		assert_equal off.splits[3], 5
-		another_key = Offset.new("123456")
+		another_key = OffsetGenerator.new("123456")
 		assert_equal another_key.splits[3], 6
-		another_key = Offset.new("531234")
+		another_key = OffsetGenerator.new("531234")
 		assert_equal another_key.splits[3], 6
 	end
 
 end
 
 # def test_key_a_is_the_first_digit_of_the_date_key
-# 	another_key = Offset.new("030315")
+# 	another_key = OffsetGenerator.new("030315")
 # 	assert_equal another_key.a, 9
-# 	another_key = Offset.new("123456")
+# 	another_key = OffsetGenerator.new("123456")
 # 	assert_equal another_key.a, 3
 # end
 #
 # def test_key_b_is_the_second_digit_of_the_date_key
-# 	off = Offset.new("030315")
+# 	off = OffsetGenerator.new("030315")
 # 	assert_equal off.b, 2
-# 	another_key = Offset.new("123456")
+# 	another_key = OffsetGenerator.new("123456")
 # 	assert_equal another_key.b, 9
-# 	another_key = Offset.new("531234")
+# 	another_key = OffsetGenerator.new("531234")
 # 	assert_equal another_key.b, 7
 # end
 #
 # def test_key_c_is_the_third_digit_of_the_date_key
-# 	off = Offset.new("030315")
+# 	off = OffsetGenerator.new("030315")
 # 	assert_equal off.c, 2
-# 	another_key = Offset.new("123456")
+# 	another_key = OffsetGenerator.new("123456")
 # 	assert_equal another_key.c, 3
-# 	another_key = Offset.new("531234")
+# 	another_key = OffsetGenerator.new("531234")
 # 	assert_equal another_key.c, 5
 # end
 #
 # def test_key_d_is_the_fourth_digit_of_the_date_key
-# 	off = Offset.new("030315")
+# 	off = OffsetGenerator.new("030315")
 # 	assert_equal off.d, 5
-# 	another_key = Offset.new("123456")
+# 	another_key = OffsetGenerator.new("123456")
 # 	assert_equal another_key.d, 6
-# 	another_key = Offset.new("531234")
+# 	another_key = OffsetGenerator.new("531234")
 # 	assert_equal another_key.d, 6
 # end

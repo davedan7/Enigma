@@ -1,65 +1,76 @@
-require_relative 'encryptor'
+require_relative 'shifter'
 require_relative 'rotation_generator'
-require_relative 'offset'
+require_relative 'offset_generator'
 require_relative 'splitter'
 require_relative 'encryption_key'
 
 class Crack
 
-  def initialize
-    @key = "00000"
-    @string = "4qesb7hv77z49pos9bek9aeldq0oacss0p"
-    @date = "020315"
+  def initialize(string, date)
+    @string = string
+    @new_str
+    @key = 0
+    @date = date
   end
 
+  def split
+    split = Splitter.new(@string)
+    split.split
+    split
+  end
+
+  def crack_rotation
+    @key.to_s.rjust(5, "0")
+  end
+
+  def splits(input)
+    [input[0..1].to_i, input[0..1].to_i, input[0..1].to_i, input[0..1].to_i,]
+  end
+
+  def crack_offset
+    OffsetGenerator.new(@date)
+  end
+
+  def shift_new
+    shift_total = splits(crack_rotation).zip(crack_offset.splits)
+    shift_new = shift_total.map { |arr| arr.reduce{ |sum, n| sum + n}}
+    shift_new
+  end
+
+  def cracked_arr
+    cracked_arr = []
+    index = 0
+    shift_new.map do |shift|
+      i = Shifter.new(shift)
+      cracked_arr << i.decrypt(split.arr[index])
+      index += 1
+    end
+    cracked_arr
+  end
 
   def crack
-    splitter = Splitter.new(@string)
-    splitter.split
-
-    crack_offset = Offset.new(@date)
-
+    # puts "Your key is: #{crack_rotation.key}, and the date is #{@date}"
     new_str = []
 
-    crack_rotation = RotationGenerator.new(@key)
-
-    a_encryptor = Encryptor.new(crack_offset.a + crack_rotation.a)
-    a_new = a_encryptor.decrypt(splitter.a)
-
-    b_encryptor = Encryptor.new(crack_offset.b + crack_rotation.b)
-    b_new = b_encryptor.decrypt(splitter.b)
-
-    c_encryptor = Encryptor.new(crack_offset.c + crack_rotation.c)
-    c_new = c_encryptor.decrypt(splitter.c)
-
-    d_encryptor = Encryptor.new(crack_offset.d + crack_rotation.d)
-    d_new = d_encryptor.decrypt(splitter.d)
-
-    cracked_arr = [a_new, b_new, c_new, d_new]
-
-
-
-    i = 0
-    until a_new[i] == nil
-      cracked_arr.each { |block| new_str << block[i]}
-      i += 1
+    index = 0
+    @string.length.times do
+      cracked_arr.each { |block| new_str << block[index]}
+      index += 1
     end
+    @new_str = new_str.join
+  end
 
-    new_str.join
-
-    if new_str[-7..-1] == "..end.."
-      puts "The key is: #{@key}"
-    else
-      @key = @key.to_i
-      @key += 1
-      @key = @key.to_s
+  def cracker
+    until @new_str[-7..-1] == "..end.."
+      @Key += 1
       crack
-      # crack(string, date)
     end
-
+    puts "Cracked key is: #{@key.to_s.rjust(5, "0")}"
   end
 
 end
 
-test = Crack.new
-test.crack
+
+fuck = Crack.new("test", "080315")
+# print fuck.crack_rotation
+print fuck.shift_new

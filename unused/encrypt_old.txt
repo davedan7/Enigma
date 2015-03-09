@@ -1,0 +1,104 @@
+# def encrypt(string, date = @offset.date)
+#
+#    # @rotation.generate_key      #Don't generate the key more than once, or everything will explode like a Michael Bay movie
+#    rotation = RotationGenerator.new(@key.key)
+#    offset = OffsetGenerator.new(date)
+#
+#    puts "Your key is: #{rotation.key}, and the date is #{date}"
+#
+#    splitter = Splitter.new(string)
+#    splitter.split
+#
+#    a_Shifter = Shifter.new(offset.a + rotation.a)
+#    a_new = a_Shifter.encrypt(splitter.a)
+#
+#    b_Shifter = Shifter.new(offset.b + rotation.b)
+#    b_new = b_Shifter.encrypt(splitter.b)
+#
+#    c_Shifter = Shifter.new(offset.c + rotation.c)
+#    c_new = c_Shifter.encrypt(splitter.c)
+#
+#    d_Shifter = Shifter.new(offset.d + rotation.d)
+#    d_new = d_Shifter.encrypt(splitter.d)
+#
+#    encrypted_arr = [a_new, b_new, c_new, d_new]
+#
+#    new_str = []
+#
+#    i = 0
+#    until a_new[i] == nil
+#      encrypted_arr.each { |block| new_str << block[i]}
+#      i += 1
+#    end
+#
+#    new_str.join
+#
+# end
+#
+#  def decrypt(string, key, date)
+#    splitter = Splitter.new(string)
+#    splitter.split
+#
+#    decrypt_offset = OffsetGenerator.new(date)
+#    decrypt_rotation = RotationGenerator.new(key)
+#
+#    a_Shifter = Shifter.new(decrypt_offset.a + decrypt_rotation.a)
+#    a_new = a_Shifter.decrypt(splitter.a)
+#
+#    b_Shifter = Shifter.new(decrypt_offset.b + decrypt_rotation.b)
+#    b_new = b_Shifter.decrypt(splitter.b)
+#
+#    c_Shifter = Shifter.new(decrypt_offset.c + decrypt_rotation.c)
+#    c_new = c_Shifter.decrypt(splitter.c)
+#
+#    d_Shifter = Shifter.new(decrypt_offset.d + decrypt_rotation.d)
+#    d_new = d_Shifter.decrypt(splitter.d)
+#
+#    encrypted_arr = [a_new, b_new, c_new, d_new]
+#
+#    new_str = []
+#
+#    i = 0
+#    until a_new[i] == nil
+#      encrypted_arr.each { |block| new_str << block[i]}
+#      i += 1
+#    end
+#
+#    new_str.join
+#
+#
+#  end
+#
+# end
+#  def decrypt(string, key, date)
+#    splitter = Splitter.new(string)
+#    splitter.split
+ #
+#    decrypt_offset = OffsetGenerator.new(date)
+#    decrypt_rotation = RotationGenerator.new(key)
+ #
+#    a_Shifter = Shifter.new(decrypt_offset.splits[0] + decrypt_rotation.splits[0])
+#    a_new = a_Shifter.decrypt(splitter.arr[0])
+ #
+#    b_Shifter = Shifter.new(decrypt_offset.splits[1] + decrypt_rotation.splits[1])
+#    b_new = b_Shifter.decrypt(splitter.arr[1])
+ #
+#    c_Shifter = Shifter.new(decrypt_offset.splits[2] + decrypt_rotation.splits[2])
+#    c_new = c_Shifter.decrypt(splitter.arr[2])
+ #
+#    d_Shifter = Shifter.new(decrypt_offset.splits[3] + decrypt_rotation.splits[3])
+#    d_new = d_Shifter.decrypt(splitter.arr[3])
+ #
+#    encrypted_arr = [a_new, b_new, c_new, d_new]
+ #
+#    new_str = []
+ #
+#    i = 0
+#    until a_new[i] == nil
+#      encrypted_arr.each { |block| new_str << block[i]}
+#      i += 1
+#    end
+ #
+#    new_str.join
+ #
+#  end

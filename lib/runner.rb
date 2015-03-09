@@ -4,37 +4,44 @@ require_relative 'offset'
 require_relative 'splitter'
 require_relative 'encryption_key'
 
+
+
+
 class Runner
 
   attr_accessor :key
 
-  def initialize
+  def initialize(string)
     # @rotation = RotationGenerator.new
     @offset = Offset.new
     @key = EncryptionKey.new
-
+    @string = string
   end
 
+  def split
+    split = Splitter.new(@string)
+    split.split
+  end
 
-  def encrypt(string, date = @offset.date)
+  def encrypt(string = @string, date = @offset.date)
 
     rotation = RotationGenerator.new(@key.key)
     offset = Offset.new(date)
 
     puts "Your key is: #{rotation.key}, and the date is #{date}"
-
-    splitter = Splitter.new(string)
-    splitter.split
+    #
+    # splitter = Splitter.new(string)
+    # splitter.split
 
     shift_total = rotation.splits.zip(offset.splits)
     shift_new = shift_total.map { |arr| arr.reduce{ |sum, n| sum + n}}
 
     encrypted_arr = []
-    count = 0
+    index = 0
     shift_new.map do |shift|
       i = Encryptor.new(shift)
-      encrypted_arr << i.encrypt(splitter.arr[count])
-      count += 1
+      encrypted_arr << i.encrypt(split.arr[index])
+      index += 1
     end
 
     new_str = []
@@ -45,7 +52,7 @@ class Runner
       i += 1
     end
 
-    new_str.join
+    puts new_str.join
 
   end
 
@@ -88,16 +95,16 @@ class Runner
      decrypt_offset = Offset.new(date)
      decrypt_rotation = RotationGenerator.new(key)
 
-     a_encryptor = Encryptor.new(decrypt_offset.a + decrypt_rotation.a)
+     a_encryptor = Encryptor.new(decrypt_offset.splits[0] + decrypt_rotation.splits[0])
      a_new = a_encryptor.decrypt(splitter.a)
 
-     b_encryptor = Encryptor.new(decrypt_offset.b + decrypt_rotation.b)
+     b_encryptor = Encryptor.new(decrypt_offset.splits[1] + decrypt_rotation.splits[1])
      b_new = b_encryptor.decrypt(splitter.b)
 
-     c_encryptor = Encryptor.new(decrypt_offset.c + decrypt_rotation.c)
+     c_encryptor = Encryptor.new(decrypt_offset.splits[2] + decrypt_rotation.splits[2])
      c_new = c_encryptor.decrypt(splitter.c)
 
-     d_encryptor = Encryptor.new(decrypt_offset.d + decrypt_rotation.d)
+     d_encryptor = Encryptor.new(decrypt_offset.splits[3] + decrypt_rotation.splits[3])
      d_new = d_encryptor.decrypt(splitter.d)
 
      encrypted_arr = [a_new, b_new, c_new, d_new]
@@ -117,16 +124,27 @@ class Runner
 
 end
 
-test = Runner.new
-test.key = EncryptionKey.new("12345")
+# filename = ARGV.first
 #
-print test.encrypt("abcdefgh", "080315\n")
-# print test.encrypt("a", "080315\n")
-# print test.encrypt("a\n")
-# print test.encrypt("this is a test. asdf,.\n")
-# test.decrypt("bzb s0lpvpmwa.4pv 9xuq", "51691", "080315")
-# test.decrypt("hd,0yejf16kmgp2f1o7n07", "57281", "080315")
-print test.decrypt("4qesb7hv77z49pos9bek9aeldq0oacss0p", "13444", "020315")
+# txt = File.open(filename, 'r')
+# line = txt.readline
+
+fuck = Runner.new("this is a test")
+fuck.key = EncryptionKey.new("12345")
+puts fuck.encrypt
+
+
+
+# test = Runner.new
+# test.key = EncryptionKey.new("12345")
+# #
+# print test.encrypt("abcdefgh", "080315\n")
+# # print test.encrypt("a", "080315\n")
+# # print test.encrypt("a\n")
+# # print test.encrypt("this is a test. asdf,.\n")
+# # test.decrypt("bzb s0lpvpmwa.4pv 9xuq", "51691", "080315")
+# # test.decrypt("hd,0yejf16kmgp2f1o7n07", "57281", "080315")
+# print test.decrypt("4qesb7hv77z49pos9bek9aeldq0oacss0p", "13444", "020315")
 
 # def encrypt(string, date = @offset.date)
 #

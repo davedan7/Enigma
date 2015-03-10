@@ -59,7 +59,6 @@ class Crack
 
     until @new_str[-7..-1] == "..end.."
       @key += 1
-      puts @key.to_s
       crack
     end
 

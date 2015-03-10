@@ -1,5 +1,4 @@
 
-
 class Shifter
 
   def initialize(shift, character_map = "abcdefghijklmnopqrstuvwxyz0123456789 .,")
@@ -17,10 +16,3 @@ class Shifter
   end
 
 end
-
-# fuck = Shifter.new(1)
-# print fuck.encrypt("this is a test..end..\n") # => nil
-# print fuck.encrypt("this is a test")
-
-# >> uijt.jt.b.uftu,,foe,,
-# >> uijt.jt.b.uftu

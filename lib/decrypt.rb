@@ -5,12 +5,10 @@ require_relative 'splitter'
 
 class Decrypt
 
-  # attr_accessor :key
-
   def initialize(string, key, date)
     @string = string
-    @key = key
-    @date = date
+    @key    = key
+    @date   = date
   end
 
   def split
@@ -33,33 +31,58 @@ class Decrypt
     shift_new
   end
 
+  def decrypted_arr
+    a_Shifter = Shifter.new(decrypt_rotation.splits[0] + decrypt_offset.splits[0])
+    a_new     = a_Shifter.decrypt(split.arr[0])
+
+    b_Shifter = Shifter.new(decrypt_rotation.splits[1] + decrypt_offset.splits[1])
+    b_new     = b_Shifter.decrypt(split.arr[1])
+
+    c_Shifter = Shifter.new(decrypt_rotation.splits[2] + decrypt_offset.splits[2])
+    c_new     = c_Shifter.decrypt(split.arr[2])
+
+    d_Shifter = Shifter.new(decrypt_rotation.splits[3] + decrypt_offset.splits[3])
+    d_new      = d_Shifter.decrypt(split.arr[3])
+
+    decrypted_arr = [a_new, b_new, c_new, d_new]
+  end
+
 
   def decrypt
-    a_Shifter = Shifter.new(decrypt_offset.splits[0] + decrypt_rotation.splits[0])
-    a_new = a_Shifter.decrypt(split.arr[0])
-
-    b_Shifter = Shifter.new(decrypt_offset.splits[1] + decrypt_rotation.splits[1])
-    b_new = b_Shifter.decrypt(split.arr[1])
-
-    c_Shifter = Shifter.new(decrypt_offset.splits[2] + decrypt_rotation.splits[2])
-    c_new = c_Shifter.decrypt(split.arr[2])
-
-    d_Shifter = Shifter.new(decrypt_offset.splits[3] + decrypt_rotation.splits[3])
-    d_new = d_Shifter.decrypt(split.arr[3])
-
-    encrypted_arr = [a_new, b_new, c_new, d_new]
-
     new_str = []
 
     i = 0
-    until a_new[i] == nil
-      encrypted_arr.each { |block| new_str << block[i]}
+    decrypted_arr[0].length.times do
+      decrypted_arr.each { |block| new_str << block[i]}
       i += 1
     end
 
     new_str.join
-
   end
+
+end
+
+if __FILE__ == $0
+
+fileread    = ARGV[0]
+filecreate  = ARGV[1]
+key         = ARGV[2]
+date        = ARGV[3]
+
+txt  = File.open(fileread, 'r')
+line = txt.readline
+
+shit  = Decrypt.new(line, key, date)
+decrypted = shit.decrypt
+
+new_file = File.open(filecreate, 'w')
+new_file.write("#{decrypted}")
+
+puts "Created file '#{filecreate}' with the key #{key} and date #{date}"
+
+end
+
+
 
 
   # def decrypted_arr
@@ -85,17 +108,3 @@ class Decrypt
   #   end
   #   new_str.join
   # end
-
-end
-
-# print fuck.split.arr # => nil
-
-fml = Decrypt.new("b6f3s7pivwqpaf7jt3kotx", "12345", "080315")
-print fml.decrypt #==>
-
-# fml = Decrypt.new("4qesb7hv77z49pos9bek9aeldq0oacss0p", "13444", "020315")
-# fml = Decrypt.new("hd,0yejf16kmgp2f1o7n07", "57281", "080315")
-# # test.decrypt("bzb s0lpvpmwa.4pv 9xuq", "51691", "080315")
-# # test.decrypt("hd,0yejf16kmgp2f1o7n07", "57281", "080315")
-
-# >> this is a test ..end..

@@ -6,11 +6,13 @@ require_relative 'encryption_key'
 
 class Crack
 
+  attr_reader :new_str, :key
+
   def initialize(string, date)
     @string = string
-    @new_str
-    @key = 0
-    @date = date
+    @key      = 0
+    @date     = date
+    @new_str  = ""
   end
 
   def split
@@ -19,58 +21,72 @@ class Crack
     split
   end
 
-  def crack_rotation
-    @key.to_s.rjust(5, "0")
-  end
-
-  def splits(input)
-    [input[0..1].to_i, input[0..1].to_i, input[0..1].to_i, input[0..1].to_i,]
-  end
-
-  def crack_offset
+  def offset
     OffsetGenerator.new(@date)
   end
 
-  def shift_new
-    shift_total = splits(crack_rotation).zip(crack_offset.splits)
-    shift_new = shift_total.map { |arr| arr.reduce{ |sum, n| sum + n}}
-    shift_new
-  end
+  def encrypted_arr
+    rotation = RotationGenerator.new(@key.to_s.rjust(5, "0"))
 
-  def cracked_arr
-    cracked_arr = []
-    index = 0
-    shift_new.map do |shift|
-      i = Shifter.new(shift)
-      cracked_arr << i.decrypt(split.arr[index])
-      index += 1
-    end
-    cracked_arr
+    a_Shifter = Shifter.new(offset.splits[0] + rotation.splits[0])
+    a_new     = a_Shifter.decrypt(split.arr[0])
+
+    b_Shifter = Shifter.new(offset.splits[1] + rotation.splits[1])
+    b_new     = b_Shifter.decrypt(split.arr[1])
+
+    c_Shifter = Shifter.new(offset.splits[2] + rotation.splits[2])
+    c_new     = c_Shifter.decrypt(split.arr[2])
+
+    d_Shifter = Shifter.new(offset.splits[3] + rotation.splits[3])
+    d_new     = d_Shifter.decrypt(split.arr[3])
+
+    encrypted_arr = [a_new, b_new, c_new, d_new]
   end
 
   def crack
-    # puts "Your key is: #{crack_rotation.key}, and the date is #{@date}"
     new_str = []
 
-    index = 0
-    @string.length.times do
-      cracked_arr.each { |block| new_str << block[index]}
-      index += 1
+    i = 0
+
+    encrypted_arr[0].length.times do
+      encrypted_arr.each { |block| new_str << block[i]}
+      i += 1
     end
-    @new_str = new_str.join
+
+    @new_str = new_str.join.strip
   end
 
   def cracker
+    crack
+
     until @new_str[-7..-1] == "..end.."
-      @Key += 1
+      @key += 1
       crack
     end
-    puts "Cracked key is: #{@key.to_s.rjust(5, "0")}"
+
+    @new_str
+    @key.to_s.rjust(5, "0")
   end
 
 end
 
+if __FILE__ == $0
 
-fuck = Crack.new("test", "080315")
-# print fuck.crack_rotation
-print fuck.shift_new
+fileread    = ARGV[0]
+filecreate  = ARGV[1]
+date        = ARGV[2]
+
+text  = File.open(fileread, 'r')
+line  = text.readline
+
+dammit         = Crack.new(line, date)
+cracked        = dammit.cracker
+cracked_string = dammit.new_str
+
+new_file = File.open(filecreate, 'w')
+new_file.write("The cracked code is: #{cracked} \n")
+new_file.write("The cracked string is: '#{cracked_string}'")
+
+puts "Created file '#{filecreate}' with the key #{cracked} and date #{date}"
+
+end

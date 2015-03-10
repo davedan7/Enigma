@@ -1,6 +1,3 @@
-# require 'minitest'
-# require 'minitest/autorun'
-# require 'minitest/pride'
 require './lib/encryption_key.rb'
 require './test/test_helper'
 

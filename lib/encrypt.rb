@@ -23,7 +23,7 @@ class Encrypt
   end
 
   def offset
-    offset = OffsetGenerator.new
+    OffsetGenerator.new
   end
 
   def shift_new   # 4 item array of the total shifts to pass to encrypt
@@ -33,19 +33,19 @@ class Encrypt
   end
 
   def encrypted_arr
-    a_Shifter = Shifter.new(shift_new[0])
-    a_new     = a_Shifter.encrypt(split[0])
+    a_Shifter     = Shifter.new(shift_new[0])
+    a_new         = a_Shifter.encrypt(split[0])
 
-    b_Shifter = Shifter.new(shift_new[1])
-    b_new     = b_Shifter.encrypt(split[1])
+    b_Shifter     = Shifter.new(shift_new[1])
+    b_new         = b_Shifter.encrypt(split[1])
 
-    c_Shifter = Shifter.new(shift_new[2])
-    c_new     = c_Shifter.encrypt(split[2])
+    c_Shifter     = Shifter.new(shift_new[2])
+    c_new         = c_Shifter.encrypt(split[2])
 
-    d_Shifter = Shifter.new(shift_new[3])
-    d_new     = d_Shifter.encrypt(split[3])
+    d_Shifter     = Shifter.new(shift_new[3])
+    d_new         = d_Shifter.encrypt(split[3])
 
-    encrypted_arr = [a_new, b_new, c_new, d_new]
+    [a_new, b_new, c_new, d_new]
   end
 
   def encrypt
@@ -58,33 +58,39 @@ class Encrypt
     end
 
     new_str.join
-
   end
 
 end
 
 if __FILE__ == $0
 
-fileread    = ARGV[0]
-filecreate  = ARGV[1]
+  fileread    = ARGV[0]
+  filecreate  = ARGV[1]
 
-txt   = File.open(fileread, 'r')
-line  = txt.readline
+  txt         = File.open(fileread, 'r')
+  line        = txt.readline
 
-fnew      = Encrypt.new(line)
-encrypted = fnew.encrypt
-if File.exists?(filecreate)
-  puts "The file already exists. Overwrite? y or n"
-  input = STDIN.gets.strip
-  if input.downcase == "y"
+  fnew        = Encrypt.new(line)
+  encrypted   = fnew.encrypt
+
+  if File.exists?(filecreate)
+    puts "The file already exists. Overwrite? y or n"
+    input = STDIN.gets.strip
+
+    if input.downcase == "y"
+      new_file = File.open(filecreate, 'w')
+      new_file.write("#{encrypted}")
+      puts "Created file '#{filecreate}' with the key #{fnew.key.key} and date #{fnew.offset.date}"
+    elsif input.downcase == "n"
+      puts "Aborted"
+    end
+
+  else
     new_file = File.open(filecreate, 'w')
     new_file.write("#{encrypted}")
     puts "Created file '#{filecreate}' with the key #{fnew.key.key} and date #{fnew.offset.date}"
-  elsif input.downcase == "n"
-    puts "Aborted"
-    return
   end
-  end
+
 end
 
 # new_file = File.open(filecreate, 'w')

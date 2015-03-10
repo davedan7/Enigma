@@ -31,6 +31,13 @@ class EncryptTest < Minitest::Test
     assert_equal a.encrypt, "vw."
   end
 
+  def test_can_encrypt_words_that_end_with_a_space
+    a = Encrypt.new("a b ")
+    a.offset.date = "080315"
+    a.key = EncryptionKey.new("12345")
+    assert_equal a.encrypt, "vw.i"
+  end
+
   def test_can_encrypt_periods
     a = Encrypt.new("...")
     a.offset.date = "080315"

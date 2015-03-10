@@ -27,24 +27,24 @@ class Decrypt
 
   def shift_new
     shift_total = decrypt_rotation.splits.zip(decrypt_offset.splits)
-    shift_new = shift_total.map { |arr| arr.reduce{ |sum, n| sum + n}}
+    shift_new   = shift_total.map { |arr| arr.reduce{ |sum, n| sum + n}}
     shift_new
   end
 
   def decrypted_arr
-    a_Shifter = Shifter.new(decrypt_rotation.splits[0] + decrypt_offset.splits[0])
-    a_new     = a_Shifter.decrypt(split.arr[0])
+    a_Shifter     = Shifter.new(decrypt_rotation.splits[0] + decrypt_offset.splits[0])
+    a_new         = a_Shifter.decrypt(split.arr[0])
 
-    b_Shifter = Shifter.new(decrypt_rotation.splits[1] + decrypt_offset.splits[1])
-    b_new     = b_Shifter.decrypt(split.arr[1])
+    b_Shifter     = Shifter.new(decrypt_rotation.splits[1] + decrypt_offset.splits[1])
+    b_new         = b_Shifter.decrypt(split.arr[1])
 
-    c_Shifter = Shifter.new(decrypt_rotation.splits[2] + decrypt_offset.splits[2])
-    c_new     = c_Shifter.decrypt(split.arr[2])
+    c_Shifter     = Shifter.new(decrypt_rotation.splits[2] + decrypt_offset.splits[2])
+    c_new         = c_Shifter.decrypt(split.arr[2])
 
-    d_Shifter = Shifter.new(decrypt_rotation.splits[3] + decrypt_offset.splits[3])
-    d_new      = d_Shifter.decrypt(split.arr[3])
+    d_Shifter     = Shifter.new(decrypt_rotation.splits[3] + decrypt_offset.splits[3])
+    d_new         = d_Shifter.decrypt(split.arr[3])
 
-    decrypted_arr = [a_new, b_new, c_new, d_new]
+    [a_new, b_new, c_new, d_new]
   end
 
 
@@ -64,21 +64,36 @@ end
 
 if __FILE__ == $0
 
-fileread    = ARGV[0]
-filecreate  = ARGV[1]
-key         = ARGV[2]
-date        = ARGV[3]
+  fileread    = ARGV[0]
+  filecreate  = ARGV[1]
+  key         = ARGV[2]
+  date        = ARGV[3]
 
-txt  = File.open(fileread, 'r')
-line = txt.readline
+  txt  = File.open(fileread, 'r')
+  line = txt.readline
 
-shit  = Decrypt.new(line, key, date)
-decrypted = shit.decrypt
+  shit  = Decrypt.new(line, key, date)
+  decrypted = shit.decrypt
 
-new_file = File.open(filecreate, 'w')
-new_file.write("#{decrypted}")
+  if File.exists?(filecreate)
+    puts "The file already exists. Overwrite? y or n"
+    input = STDIN.gets.strip
 
-puts "Created file '#{filecreate}' with the key #{key} and date #{date}"
+    if input.downcase == "y"
+      new_file = File.open(filecreate, 'w')
+      new_file.write("#{decrypted}")
+
+      puts "Created file '#{filecreate}' with the key #{key} and date #{date}"
+    elsif input.downcase == "n"
+      puts "Aborted"
+    end
+
+  else
+    new_file = File.open(filecreate, 'w')
+    new_file.write("#{decrypted}")
+
+    puts "Created file '#{filecreate}' with the key #{key} and date #{date}"
+  end
 
 end
 

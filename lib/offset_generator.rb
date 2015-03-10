@@ -1,4 +1,5 @@
 class OffsetGenerator
+
 	attr_accessor :date
 
 	def initialize(target_date = date)

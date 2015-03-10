@@ -40,19 +40,17 @@ class Crack
     d_Shifter = Shifter.new(offset.splits[3] + rotation.splits[3])
     d_new     = d_Shifter.decrypt(split.arr[3])
 
-    encrypted_arr = [a_new, b_new, c_new, d_new]
+    [a_new, b_new, c_new, d_new]
   end
 
   def crack
     new_str = []
 
     i = 0
-
     encrypted_arr[0].length.times do
       encrypted_arr.each { |block| new_str << block[i]}
       i += 1
     end
-
     @new_str = new_str.join.strip
   end
 
@@ -61,10 +59,10 @@ class Crack
 
     until @new_str[-7..-1] == "..end.."
       @key += 1
+      puts @key.to_s
       crack
     end
 
-    @new_str
     @key.to_s.rjust(5, "0")
   end
 
@@ -72,21 +70,37 @@ end
 
 if __FILE__ == $0
 
-fileread    = ARGV[0]
-filecreate  = ARGV[1]
-date        = ARGV[2]
+  fileread       = ARGV[0]
+  filecreate     = ARGV[1]
+  date           = ARGV[2]
 
-text  = File.open(fileread, 'r')
-line  = text.readline
+  text           = File.open(fileread, 'r')
+  line           = text.readline
 
-dammit         = Crack.new(line, date)
-cracked        = dammit.cracker
-cracked_string = dammit.new_str
+  dammit         = Crack.new(line, date)
+  cracked        = dammit.cracker
+  cracked_string = dammit.new_str
 
-new_file = File.open(filecreate, 'w')
-new_file.write("The cracked code is: #{cracked} \n")
-new_file.write("The cracked string is: '#{cracked_string}'")
+  if File.exists?(filecreate)
+    puts "This file already exists. Overwrite? y or n"
+    input = STDIN.gets.strip
 
-puts "Created file '#{filecreate}' with the key #{cracked} and date #{date}"
+    if input.downcase == 'y'
+      new_file = File.open(filecreate, 'w')
+      new_file.write("The cracked code is: #{cracked} \n")
+      new_file.write("The cracked string is: '#{cracked_string}'")
+
+      puts "Created file '#{filecreate}' with the key #{cracked} and date #{date}"
+    elsif input.downcase == 'n'
+      puts "Aborted"
+    end
+
+  else
+    new_file = File.open(filecreate, 'w')
+    new_file.write("The cracked code is: #{cracked} \n")
+    new_file.write("The cracked string is: '#{cracked_string}'")
+
+    puts "Created file '#{filecreate}' with the key #{cracked} and date #{date}"
+  end
 
 end
